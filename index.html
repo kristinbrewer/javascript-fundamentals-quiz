@@ -10,6 +10,7 @@
 
 <!--link java sheets-->
 <body>
+    
     <div class ="wrapper"> <!--wrapper used to style layout -->
     <header>
         <div class ="score"> 
@@ -21,7 +22,7 @@
         </div>
     </header>
 <!--Opening view-->
-    <section id="welcome-screen"> <!--add class id?-->
+    <section id="welcome-screen">
         <h1>Welcome to the Coding Quiz Challenge!</h1>
         <p>Try to answer the following code-related questions within the time limit.
             Keep in mind that incorrect answers will penalize your score/time by 15 seconds!
@@ -32,20 +33,20 @@
         </button>
     </section>
     <!--start of quiz questions section-->
-    <section id = "quiz-questions" class = "hide">
+    <section id = "quiz-questions" class = "display">
         <h1 id = "question"> </h1>
         <div id = "answers"></div>
     </section>
 
     <!--end of quiz questions section-->
-<section id ="end-page" class = hide>
+<section id ="end-page" class = "display">
 <h1>All done!</h1>
 <p>Your final score is</p>
 <p>Enter initials: <!--input type-->
 <button id = "submit">Submit</button>
 </p>
 </section>
-
+<script src="./js/script.js"></script>
 
 </body>
 </html>

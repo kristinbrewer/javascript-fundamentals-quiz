@@ -20,7 +20,7 @@ body{
 #welcome-screen {
     margin: 100px;
 }
-.hide {
-    visibility: hidden;
+.display {
+    display: none;
 }
 /*flexbox stuff*/

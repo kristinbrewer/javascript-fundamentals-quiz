@@ -1,5 +1,5 @@
 //Sample questions/answers
-//below is an object that assigns variables 
+//below is an object array that assigns variables 
 var quizquestions = [
 {
     questiontitle: 'The best flavor of ice cream is:',
