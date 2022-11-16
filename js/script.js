@@ -13,30 +13,30 @@ var questionindex = 0;
 
 
 function hidestart () {  
-quiz === quizquestions;
 startbutton.setAttribute("class", "display");
 welcomescreen.setAttribute("class", "display");
-quiz.removeAttribute("class");
-
+console.log(quizquestions)
+quizstarts ();
 }
 startbutton.addEventListener("click", hidestart);
 
 
 //and the first question pops up 
 function quizstarts () {
+    quiz.removeAttribute("class");
     //array for questions
     var questionup = quizquestions[questionindex];
     //question is updated 
     var linequestion = document.getElementById('question');
-    linequestion.textContent = questionup.title;
+    linequestion.textContent = questionup.questiontitle;
     
     //clear answers
     answers.innerHTML = '';
     
     //loop for choices
-    for (var i = 0; i < questionup.options.length; i++){
+    for (var i = 0; i < questionup.choices.length; i++){
     //created a new button
-    var options = questionup.options[i];
+    var options = questionup.choices[i];
     var getbutton = document.createElement('button');
     getbutton.setAttribute('class', 'options');
     getbutton.setAttribute('value', options);
