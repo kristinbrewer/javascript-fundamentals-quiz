@@ -3,9 +3,10 @@ var welcomescreen = document.body.querySelector("#welcome-screen");
 var quiz = document.getElementById('quiz-questions');
 var answers = document.body.querySelector("#answers");
 var endpage = document.body.querySelector("#end-page");
-
+var feedback = document.body.querySelector("#feedback");
 var questionindex = 0;
-
+var time = 75;
+var timer;
 //high scores
 //timer
 
@@ -23,6 +24,8 @@ startbutton.addEventListener("click", hidestart);
 
 //and the first question pops up 
 function quizstarts () {
+    //starts timer
+    var timer = setInterval(clock, 1000);
     quiz.removeAttribute("class");
     //array for questions
     var questionup = quizquestions[questionindex];
@@ -47,11 +50,51 @@ function quizstarts () {
     answers.appendChild(getbutton);
       }
     }
-    
+    //checking answers 
+    function selectionmade(event) {
+        var button = event.target;
+//check to make sure the click is a button- nothing happens if not 
+if (!button.matches('.choice')) {
+    return;
+}
+
+//check for wrong answer 
+
+if (button.value !== quizquestions[questionindex].answer) 
+{
+    time -= 15;
+
+    if (time <0) {
+        time = 0;
+    }
+//new displayed time
+timer.textContent = time;
+//indicates wrong choice
+feedback.textContent = 'Incorrect';
+}
+else {
+    feedback.textContent = 'Correct';
+}
+//shows correct/incorrect on page for half second
+feedback.setAttribute('class', 'feedback');
+flashresponse (function () {
+    feedback.setAttribute('class', 'hide feedback');}, 1000);
+
+    //shows next question
+    questionindex++;
+
+    //checks time
+    if (time <=0 || questionindex === quizquestions.length) {
+        endquiz();
+    }
+    else {
+        quizstarts ();
+    }
+    }
     
     
     //show random deck of questions
-    //for loop
+
     
     //tally score
     
