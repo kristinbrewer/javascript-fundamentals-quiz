@@ -4,13 +4,13 @@ var quiz = document.getElementById('quiz-questions');
 var answers = document.body.querySelector("#answers");
 var endpage = document.body.querySelector("#end-page");
 var feedback = document.body.querySelector("#feedback");
+var initialentry = document.body.querySelector("#initials");
+var submitbutton = document.body.querySelector("#submit");
 var questionindex = 0;
 var time = 75;
-var timer;
-//high scores
-//timer
+var timer = document.getElementById('time');
+var timershow;
 
-//when the start button is selected, the start screen disappears
 
 
 function hidestart () {  
@@ -24,8 +24,8 @@ startbutton.addEventListener("click", hidestart);
 
 //and the first question pops up 
 function quizstarts () {
-    //starts timer
-    var timer = setInterval(clock, 1000);
+    timershow = setInterval(clock, 1000);
+    timer.textContent = time;
     quiz.removeAttribute("class");
     //array for questions
     var questionup = quizquestions[questionindex];
@@ -50,13 +50,10 @@ function quizstarts () {
     answers.appendChild(getbutton);
       }
     }
-    //checking answers 
-    function selectionmade(event) {
+//checking answers 
+function selectionmade(event) {
         var button = event.target;
-//check to make sure the click is a button- nothing happens if not 
-if (!button.matches('.choice')) {
-    return;
-}
+
 
 //check for wrong answer 
 
@@ -67,7 +64,7 @@ if (button.value !== quizquestions[questionindex].answer)
     if (time <0) {
         time = 0;
     }
-//new displayed time
+    //new displayed time
 timer.textContent = time;
 //indicates wrong choice
 feedback.textContent = 'Incorrect';
@@ -77,8 +74,8 @@ else {
 }
 //shows correct/incorrect on page for half second
 feedback.setAttribute('class', 'feedback');
-flashresponse (function () {
-    feedback.setAttribute('class', 'hide feedback');}, 1000);
+let flashresponse = (function () {
+    feedback.setAttribute('class', 'hide-feedback');}, 1000);
 
     //shows next question
     questionindex++;
@@ -91,20 +88,62 @@ flashresponse (function () {
         quizstarts ();
     }
     }
-    
-    
-    //show random deck of questions
 
+    function endquiz () {
+        //stops timer
+        clearInterval (timershow);
+        endpage.removeAttribute('class');
+        //score
+        var score = document.getElementById('score-final');
+        score.textContent = time;
+        quiz.setAttribute('class', 'hide');
+    }
+
+    function clock() {
+        // update time
+      time--;
+      timer.textContent = time;
+
+  // time runs out
+  if (time <= 0) {
+    endquiz();
+  }
+   }
     
-    //tally score
+   function savescore() {
+    // get value of input box
+   
+    var initial = initialentry.value.trim();
+  
+    // make sure value wasn't empty
+    if (initial !== '') {
+      // get saved scores from localstorage, or if not any, set to empty array
+      var highscores =
+        JSON.parse(window.localStorage.getItem('highscores')) || [];
+  
+      // format new score object for current user
+      var newScore = {
+        score: time,
+        initial: initial,
+      };
+  
+      // save to localstorage
+      highscores.push(newScore);
+      window.localStorage.setItem('highscores', JSON.stringify(highscores));
+  
+      // redirect to next page
+      window.location.href = 'highscores.html';
+    }
+  }
+  
+  function checkenter(event) {
     
-    //subtract 15 points 
-    
-    //enter initials 
-    
-    
-    
-    // Access toggle switch HTML element
-    
-    
-    
+    if (event.key === 'Enter') {
+      savescore();
+    }
+  }
+  submitbutton.onclick = savescore;
+  
+    answers.onclick = selectionmade;
+    startbutton.onclick = quizstarts;
+    initialentry.onkeyup = checkenter;
